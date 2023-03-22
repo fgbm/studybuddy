@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ assignment.title }}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-title">{{ assignment.title }}</h1>
+          </div>
+          <div class="card-body">
+            <div class="card-text">
+              <p>Курс: {{ assignment.course.title }}</p>
+              <p>Описание: {{ assignment.description }}</p>
+              <p>Срок выполнения: {{ assignment.due_date }}</p>
+              {% if request.user.userprofile.role == 'student' %}
+                {% if request.user.userprofile in assignment.students_completed.all %}
+                  <div class="alert alert-success mt-3" role="alert">
+                    Вы выполнили это домашнее задание
+                  </div>
+                {% else %}
+                  <div class="alert alert-info mt-3" role="alert">
+                    Отметить домашнее задание как выполненное?
+                    <form method="POST" class="d-inline">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-primary ms-3">Отметить</button>
+                    </form>
+                  </div>
+                {% endif %}
+              {% else %}
+                {% if assignment.students_completed.count == assignment.course.students.count %}
+                  <div class="alert alert-success mt-3" role="alert">
+                    Домашнее задание выполнено всеми студентами
+                  </div>
+                {% else %}
+                  <div class="alert alert-info mt-3" role="alert">
+                    Домашнее задание еще не выполнено всеми студентами
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            {% if request.user.userprofile.role == 'teacher' %}
+              <a href="{% url 'assignment_update' assignment.pk %}" class="btn btn-warning">Редактировать</a>
+            {% endif %}
+            <a href="{% url 'home' %}" class="btn btn-secondary">Закрыть</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

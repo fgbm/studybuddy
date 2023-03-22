@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "StudyBuddy"
+version = "0.1"
+description = "StudyBuddy - это платформа, созданная для студентов, чтобы помочь им легко организовывать свои занятия, домашние задания, проекты и взаимодействовать с однокурсниками и преподавателями."
+authors = ["Чмелюк Владислав"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.10.0"
+isort = "^5.9.3"
+
+[tool.black]
+line-length = 110
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"

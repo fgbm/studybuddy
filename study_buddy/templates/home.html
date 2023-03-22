@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Добро пожаловать, {{ user.first_name }} {{ user.last_name }}!</h1>
+  <br />
+  {% if user.userprofile.role == 'student' %}
+    <h2>Мои курсы</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Название курса</th>
+        <th>Преподаватель</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for course in courses %}
+        <tr>
+          <td>
+            <a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a>
+          </td>
+          <td>{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="2">Пока нет курсов</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <br />
+    <h2>Список домашнего задания</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Срок выполнения</th>
+        <th>Задание</th>
+        <th>Курс</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for course in courses %}
+        {% for assignment in course.assignments.all %}
+          <tr>
+            <td>{{ assignment.due_date }}</td>
+            <td>
+              <a href="{% url 'assignment_detail' assignment.id %}">{{ assignment.title }}</a>
+            </td>
+            <td>{{ course.title }}</td>
+            <td>
+              {% if user.userprofile in assignment.students_completed.all %}
+                Выполнено
+              {% else %}
+                Не выполнено
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      {% empty %}
+        <tr>
+          <td colspan="3">Пока нет домашнего задания</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  {% else %}
+    <h2>Курсы, которые я преподаю</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Название курса</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for course in courses %}
+        <tr>
+          <td>
+            <a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td>Пока нет курсов</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <a href="{% url 'course_create' %}" class="btn btn-primary">Создать новый курс</a>
+  {% endif %}
+{% endblock %}

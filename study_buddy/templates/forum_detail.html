@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ course.title }} Форум</h1>
+  <br />
+  {% if user.is_authenticated %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Опубликовать сообщение</h5>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+      </div>
+    </div>
+  {% else %}
+    <p>Пожалуйста, <a href="{% url 'user_login' %}?next={{ request.path }}">войдите в систему</a>, чтобы оставлять сообщения на форуме.</p>
+  {% endif %}
+  {% if posts %}
+    {% for post in posts %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ post.author.user.username }} написал {{ post.created_at }}</h6>
+          <p class="card-text">{{ post.content }}</p>
+          {% if user.is_authenticated and user == post.author.user %}
+            <a href="{% url 'forum_post_delete' post.id %}" class="btn btn-danger">Удалить</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>На форуме пока нет сообщений.</p>
+  {% endif %}
+{% endblock %}

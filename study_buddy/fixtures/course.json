@@ -1,0 +1,132 @@
+[
+  {
+    "model": "study_buddy.course",
+    "pk": 1,
+    "fields": {
+      "title": "Математика для начинающих",
+      "teacher": 2,
+      "start_date": "2023-04-01",
+      "end_date": "2023-05-31"
+    }
+  },
+  {
+    "model": "study_buddy.lesson",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "title": "Основы алгебры",
+      "description": "Введение в алгебру, решение уравнений, работа с переменными",
+      "date_time": "2023-04-03T14:00:00Z"
+    }
+  },
+  {
+    "model": "study_buddy.lesson",
+    "pk": 2,
+    "fields": {
+      "course": 1,
+      "title": "Геометрия",
+      "description": "Понятия пространства, решение геометрических задач",
+      "date_time": "2023-04-10T14:00:00Z"
+    }
+  },
+  {
+    "model": "study_buddy.assignment",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "title": "Домашнее задание 1",
+      "description": "Решение задач по алгебре",
+      "due_date": "2023-04-17T23:59:59Z"
+    }
+  },
+  {
+    "model": "study_buddy.course",
+    "pk": 2,
+    "fields": {
+      "title": "Химия для школьников",
+      "teacher": 3,
+      "start_date": "2023-04-01",
+      "end_date": "2023-05-31"
+    }
+  },
+  {
+    "model": "study_buddy.lesson",
+    "pk": 3,
+    "fields": {
+      "course": 2,
+      "title": "Основы химии",
+      "description": "Введение в химию, понятие элементов, соединений и реакций",
+      "date_time": "2023-04-04T15:00:00Z"
+    }
+  },
+  {
+    "model": "study_buddy.lesson",
+    "pk": 4,
+    "fields": {
+      "course": 2,
+      "title": "Химические реакции",
+      "description": "Реакции разложения, синтеза, окисления и восстановления",
+      "date_time": "2023-04-11T15:00:00Z"
+    }
+  },
+  {
+    "model": "study_buddy.assignment",
+    "pk": 2,
+    "fields": {
+      "course": 2,
+      "title": "Домашнее задание 1",
+      "description": "Решение задач по химии",
+      "due_date": "2023-04-18T23:59:59"
+    }
+  },
+  {
+    "model": "study_buddy.assignment",
+    "pk": 3,
+    "fields": {
+      "course": 2,
+      "title": "Домашнее задание 2",
+      "description": "Решение задач по химии",
+      "due_date": "2023-04-25T23:59:59Z"
+    }
+  },
+  {
+    "model": "study_buddy.course",
+    "pk": 3,
+    "fields": {
+      "title": "Программирование на Python",
+      "teacher": 2,
+      "start_date": "2023-04-01",
+      "end_date": "2023-05-31"
+    }
+  },
+  {
+    "model": "study_buddy.lesson",
+    "pk": 5,
+    "fields": {
+      "course": 3,
+      "title": "Основы языка Python",
+      "description": "Введение в Python, синтаксис, типы данных и переменные",
+      "date_time": "2023-04-05T16:00:00Z"
+    }
+  },
+  {
+    "model": "study_buddy.lesson",
+    "pk": 6,
+    "fields": {
+      "course": 3,
+      "title": "Условные операторы и циклы",
+      "description": "Условные операторы if-else, циклы while и for",
+      "date_time": "2023-04-12T16:00:00Z"
+    }
+  },
+  {
+    "model": "study_buddy.assignment",
+    "pk": 4,
+    "fields": {
+      "course": 3,
+      "title": "Домашнее задание 1",
+      "description": "Написание программ на Python",
+      "due_date": "2023-04-19T23:59:59Z"
+    }
+  }
+]

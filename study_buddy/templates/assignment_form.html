@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>
+    {% if object %}Редактирование задания{% else %}Создание нового задания{% endif %}
+  </h1>
+  <form method="POST" class="needs-validation" novalidate>
+    {% csrf_token %}
+    {% if form.instance.pk %}
+      <input type="hidden" name="course" value="{{ form.instance.course.pk }}">
+    {% else %}
+      <input type="hidden" name="course" value="{{ course.pk }}">
+    {% endif %}
+    <div class="mb-3">
+      <label for="{{ form.title.auto_id }}" class="form-label">Название</label>
+      <input type="text" class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+             id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}"
+             value="{{ form.title.value|default:'' }}" required>
+      <div class="invalid-feedback">{{ form.title.errors }}</div>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.description.auto_id }}" class="form-label">Описание</label>
+      <textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}"
+                id="{{ form.description.auto_id }}" name="{{ form.description.html_name }}" rows="3"
+                required>{{ form.description.value|default:'' }}</textarea>
+      <div class="invalid-feedback">{{ form.description.errors }}</div>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.due_date.auto_id }}" class="form-label">Срок выполнения</label>
+      <input type="datetime-local" class="form-control {% if form.due_date.errors %}is-invalid{% endif %}"
+             id="{{ form.due_date.auto_id }}" name="{{ form.due_date.html_name }}"
+             value="{{ form.due_date.value|default:''|date:'Y-m-d\TH:i' }}" required>
+      <div class="invalid-feedback">{{ form.due_date.errors }}</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {% if create %}Создать{% else %}Сохранить изменения{% endif %}
+    </button>
+    {% if form.instance.pk %}
+      <a href="{% url 'course_detail' form.instance.course.pk %}" class="btn btn-secondary">Отмена</a>
+    {% else %}
+      <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Отмена</a>
+    {% endif %}
+
+  </form>
+{% endblock %}

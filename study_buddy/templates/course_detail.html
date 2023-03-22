@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ course.title }}</h1>
+  <br />
+  <h2>Преподаватель: {{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</h2>
+  <p>
+    <span>Дата начала: {{ course.start_date }}</span><br>
+    <span>Дата окончания: {{ course.end_date }}</span><br>
+  </p>
+
+  {% if user.userprofile.role == 'teacher' %}
+    <a href="{% url 'course_update' course.pk %}" class="btn btn-primary btn-sm">Редактировать курс</a>
+    <a href="{% url 'course_delete' course.pk %}" class="btn btn-danger btn-sm">Удалить курс</a>
+    <br />
+    <br />
+    <h3>Список студентов</h3>
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Интересы</th>
+        {% if user.userprofile.role == 'teacher' %}
+          <th style="width: 100px;">Действия</th>
+        {% endif %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for student in course.students.all %}
+        <tr>
+          <td>{{ student.user.last_name }}</td>
+          <td>{{ student.user.first_name }}</td>
+          <td>{{ student.user.userprofile.interests }}</td>
+          {% if user.userprofile.role == 'teacher' %}
+            <td style="width: 100px;">
+              <form method="POST"
+                    action="{% url 'remove_student_from_course' course.pk student.pk %}"
+                    style="display:inline;"
+              >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+              </form>
+            </td>
+          {% endif %}
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="{% if user.userprofile.role == 'teacher' %}4{% else %}3{% endif %}">Нет студентов</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% if all_students %}
+      <div>
+        <button
+            type="button"
+            class="btn btn-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addStudentModal"
+        >
+          Добавить студента
+        </button>
+      </div>
+    {% endif %}
+
+    <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addStudentModalLabel">
+              Добавить студента в курс "{{ course.title }}"
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <form method="POST" action="{% url 'add_student_to_course' course.pk %}">
+            <div class="modal-body">
+              {% csrf_token %}
+              <select name="student_pk" class="form-select mb-3">
+                {% for student in all_students %}
+                  {% if student not in course.students.all %}
+                    <option
+                        value="{{ student.pk }}">{{ student.user.first_name }} {{ student.user.last_name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+              <button type="submit" class="btn btn-primary">Добавить студента</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+  {% endif %}
+
+  <br />
+  <h3>Уроки</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Дата и время</th>
+        <th>Название</th>
+        <th>Описание</th>
+        {% if user.userprofile.role == 'teacher' %}
+          <th>Действия</th>
+        {% endif %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for lesson in course.lessons.all %}
+        <tr>
+          <td>{{ lesson.date_time|date:"d.m.Y H:i" }}</td>
+          <td>{{ lesson.title }}</td>
+          <td>{{ lesson.description }}</td>
+          {% if user.userprofile.role == 'teacher' %}
+            <td>
+              <a href="{% url 'lesson_update' lesson.pk %}" class="btn btn-success btn-sm">Редактировать</a>
+            </td>
+          {% endif %}
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="{% if user.userprofile.role == 'teacher' %}4{% else %}3{% endif %}">
+            Пока нет занятий
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if user.userprofile.role == 'teacher' %}
+    <a href="{% url 'lesson_create' course.pk %}" class="btn btn-primary btn-sm">Добавить урок</a>
+    <br>
+  {% endif %}
+
+  <br />
+  <h3>Домашние задания</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Срок выполнения</th>
+        <th>Название</th>
+        <th>Описание</th>
+        {% if user.userprofile.role == 'teacher' %}
+          <th>Действия</th>
+        {% endif %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for assignment in course.assignments.all %}
+        <tr class="{% if assignment.students_completed.count == assignment.course.students.count %}table-success{% endif %}">
+          <td>{{ assignment.due_date|date:"d.m.Y H:i" }}</td>
+          <td>{{ assignment.title }}</td>
+          <td>{{ assignment.description }}</td>
+          {% if user.userprofile.role == 'teacher' %}
+            <td>
+              <a href="{% url 'assignment_update' assignment.pk %}" class="btn btn-success btn-sm">Редактировать</a>
+            </td>
+          {% endif %}
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="{% if user.userprofile.role == 'teacher' %}4{% else %}3{% endif %}">Пока нет заданий
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if user.userprofile.role == 'teacher' %}
+    <a href="{% url 'assignment_create' course.pk %}" class="btn btn-primary btn-sm">Добавить задание</a>
+    <br>
+    <br>
+    <br>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-danger text-white">
+            <h2>Удаление курса</h2>
+          </div>
+          <div class="card-body">
+            <p class="card-text">Вы действительно хотите удалить курс "{{ course.title }}"?</p>
+            <form method="post">
+              {% csrf_token %}
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger">Да, удалить курс</button>
+              </div>
+            </form>
+            <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary mt-3">Назад к курсу</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

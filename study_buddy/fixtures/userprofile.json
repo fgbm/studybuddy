@@ -1,0 +1,159 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "first_name": "Супер",
+      "last_name": "Пользователь",
+      "password": "pbkdf2_sha256$390000$eNQDlF8yyhJlpCzuRdWygT$JnEWy5yWpzipW4xPyLtabG/RuAhiAfMq8qORmIisCQE=",
+      "is_superuser": true,
+      "email": "admin@example.com",
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "role": "teacher",
+      "interests": "Математика, Физика, Информатика"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "teacher1",
+      "first_name": "Иван",
+      "last_name": "Иванов",
+      "password": "pbkdf2_sha256$390000$8dE9p8RVoC0SIUoBVnsRnR$NwJtqsStf5kyU+Z5YfbR26VvRlxSB7wW0ysiYslwnCM=",
+      "is_active": true
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "role": "teacher",
+      "interests": "Химия, Биология"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "teacher2",
+      "first_name": "Петр",
+      "last_name": "Петров",
+      "password": "pbkdf2_sha256$390000$06cFI8EsoipNxWwKlvsRBY$CVKlttK4mR13bEdFCLJutRY+4uZh5GS5F2pXG4/cL6U="
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "role": "teacher",
+      "interests": "История, Обществознание"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "student1",
+      "first_name": "Сергей",
+      "last_name": "Сергеев",
+      "password": "pbkdf2_sha256$390000$gYomaQi3LG7o0ogzMrkPG5$JQUQVzelb6pBvs1SXdyl7PWYA7WEtDPkKvTAzpbuvrw="
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "role": "student",
+      "interests": "Физкультура, Иностранные языки"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "student2",
+      "first_name": "Андрей",
+      "last_name": "Андреев",
+      "password": "pbkdf2_sha256$390000$IvYN9xWH3W7qKPbdM3kBOW$puRbmPy6CgO0b8qJPhYipUMxA/4EQCDccPFlA5rrxtQ="
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "role": "student",
+      "interests": "Литература, История искусства"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "username": "student3",
+      "first_name": "Елена",
+      "last_name": "Еленова",
+      "password": "pbkdf2_sha256$390000$gT1Dvy7dylNZNycg1A1k56$G12cQlKy1eQlpPqo7cDULCNkAZCar/+yrPhx18Ru1dc="
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "role": "student",
+      "interests": "Информатика, Математика"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "username": "student4",
+      "first_name": "Мария",
+      "last_name": "Маринина",
+      "password": "pbkdf2_sha256$390000$29tBXdNz0yrZYLQRwvTWVr$yDw3JDEJCKk6UODBKJfDKrd8gVJKgP+tfXoC8my2afY="
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "role": "student",
+      "interests": "История, Обществознание"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+      "username": "student5",
+      "first_name": "Никита",
+      "last_name": "Никитин",
+      "password": "pbkdf2_sha256$390000$IMlCIuQIFqJNMtGlr7Iify$MSPs8PIypPuCVO7zeJo5c5WqcDr1yhfti6XH1O6CtiY="
+    }
+  },
+  {
+    "model": "study_buddy.userprofile",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "role": "student",
+      "interests": "Химия, Физика"
+    }
+  }
+]
